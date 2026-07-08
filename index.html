@@ -1,845 +1,523 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rise&Recruit</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <style>
-        :root {
-            --brand-orange: #FF4400;
-            --brand-blue: #3D45AA;
-        }
-
-        html, body {
-            height: 100%;
-        }
-
-        body {
-            position: relative;
-            background-color: #14151F;
-            background-image:
-                radial-gradient(circle at 8% 12%, rgba(255, 90, 30, 0.55) 0%, transparent 32%),
-                radial-gradient(circle at 92% 15%, rgba(78, 87, 210, 0.55) 0%, transparent 34%),
-                radial-gradient(circle at 12% 92%, rgba(78, 87, 210, 0.50) 0%, transparent 32%),
-                radial-gradient(circle at 96% 96%, rgba(255, 90, 30, 0.45) 0%, transparent 32%),
-                linear-gradient(160deg, #1B1C29 0%, #14151F 45%, #1A1526 100%),
-                repeating-linear-gradient(
-                    135deg,
-                    rgba(120, 140, 255, 0.10) 0px,
-                    rgba(120, 140, 255, 0.10) 1px,
-                    transparent 1px,
-                    transparent 30px
-                ),
-                repeating-linear-gradient(
-                    45deg,
-                    rgba(255, 120, 60, 0.09) 0px,
-                    rgba(255, 120, 60, 0.09) 1px,
-                    transparent 1px,
-                    transparent 30px
-                ),
-                radial-gradient(rgba(150, 165, 255, 0.22) 1.4px, transparent 1.4px);
-            background-size:
-                auto, auto, auto, auto,
-                auto,
-                auto, auto,
-                26px 26px;
-            background-attachment: fixed;
-            min-height: 100vh;
-            overflow-x: hidden;
-            color: #EDEDF2;
-        }
-
-       
-        body::before,
-        body::after {
-            content: '';
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(90px);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        body::before {
-            width: 520px;
-            height: 520px;
-            top: -160px;
-            left: -140px;
-            background: radial-gradient(circle, rgba(255, 90, 30, 0.55) 0%, rgba(255, 90, 30, 0) 70%);
-        }
-
-        body::after {
-            width: 600px;
-            height: 600px;
-            bottom: -200px;
-            right: -160px;
-            background: radial-gradient(circle, rgba(78, 87, 210, 0.55) 0%, rgba(78, 87, 210, 0) 70%);
-        }
-
-        .card-hover {
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-            background-color: #ffffff;
-        }
-
-        .card-image-placeholder {
-            height: 220px;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 1.25rem 2.5rem rgba(20, 20, 30, 0.18) !important;
-            border-color: #ff9b73 !important;
-        }
-
-        /* Decorative section divider: orange fades into blue with a center accent dot */
-        .section-divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 3rem 0 2.25rem;
-        }
-
-        .section-divider .line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--brand-orange) 70%, var(--brand-blue) 100%);
-        }
-
-        .section-divider .line.reverse {
-            background: linear-gradient(90deg, var(--brand-blue) 0%, var(--brand-orange) 30%, transparent);
-        }
-
-        footer .nav-link,
-        footer p {
-            color: #C7C9D9 !important;
-        }
-
-        footer .nav-link:hover {
-            color: #ffffff !important;
-        }
-
-        .section-divider .dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--brand-orange), var(--brand-blue));
-            box-shadow: 0 0 0 4px rgba(61, 69, 170, 0.08);
-            flex-shrink: 0;
-        }
-
-        .hero-section {
-            padding: 4.5rem 0 2.5rem;
-        }
-
-        .hero-kicker {
-            color: #ffffff;
-            font-size: clamp(3rem, 6vw, 4.75rem);
-            line-height: 0.98;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin: 0;
-        }
-
-        .hero-kicker.accent {
-            color: #ff9800;
-            margin-top: 0.35rem;
-        }
-
-        .hero-copy {
-            max-width: 38rem;
-            color: rgba(237, 237, 242, 0.88);
-            font-size: 1.08rem;
-            line-height: 1.85;
-            margin-top: 2rem;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .hero-actions .btn {
-            min-width: 10.5rem;
-            padding: 0.9rem 1.65rem;
-            border-radius: 1rem;
-            font-weight: 700;
-        }
-
-        .hero-visual {
-            position: relative;
-            min-height: 34rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-rings {
-            position: absolute;
-            width: min(100%, 34rem);
-            aspect-ratio: 1;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-        }
-
-        .hero-rings.ring-1 {
-            width: min(100%, 28rem);
-            border-color: rgba(255, 255, 255, 0.10);
-        }
-
-        .hero-rings.ring-2 {
-            width: min(100%, 22rem);
-            border-color: rgba(255, 255, 255, 0.18);
-        }
-
-        .hero-badge {
-            position: absolute;
-            padding: 0.8rem 1.2rem;
-            border-radius: 0.9rem;
-            background: rgba(90, 110, 190, 0.38);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            color: #f4f6ff;
-            font-weight: 700;
-            box-shadow: 0 0.75rem 1.5rem rgba(10, 15, 35, 0.2);
-            backdrop-filter: blur(8px);
-        }
-
-        .hero-badge.badge-1 { top: 16%; left: 3%; }
-        .hero-badge.badge-2 { top: 18%; right: 7%; }
-        .hero-badge.badge-3 { top: 41%; left: 0%; }
-        .hero-badge.badge-4 { bottom: 20%; left: 7%; }
-        .hero-badge.badge-5 { bottom: 28%; right: 2%; }
-        .hero-badge.badge-6 { bottom: 11%; right: 9%; }
-
-        .hero-logo-shell {
-            position: relative;
-            z-index: 2;
-            width: min(100%, 31rem);
-            aspect-ratio: 1;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            background: rgba(61, 69, 170, 0.35);
-            box-shadow: 0 0 0 18px rgba(255, 255, 255, 0.06), 0 0 0 42px rgba(255, 255, 255, 0.04);
-        }
-
-        .hero-logo-shell img {
-            width: 68%;
-            height: auto;
-            border-radius: 50%;
-            background: #ffffff;
-            padding: 1rem;
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 1rem;
-            margin-top: 3rem;
-        }
-
-        .hero-stat {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.15rem;
-            padding: 1.2rem 1rem;
-            min-height: 8.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-stat strong {
-            font-size: clamp(2rem, 3vw, 2.5rem);
-            line-height: 1;
-            color: #ffffff;
-        }
-
-        .hero-stat span {
-            display: block;
-            margin-top: 0.65rem;
-            color: rgba(237, 237, 242, 0.75);
-            font-size: 1rem;
-        }
-
-        .content-section {
-            padding: 1rem 0 3rem;
-        }
-
-        .section-title {
-            font-size: clamp(1.9rem, 3vw, 2.6rem);
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.75rem;
-        }
-
-        .section-subtitle {
-            color: rgba(237, 237, 242, 0.78);
-            max-width: 44rem;
-            margin-bottom: 2rem;
-        }
-
-        .feature-panel {
-            height: 100%;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            border-radius: 1.25rem;
-            padding: 1.5rem;
-            box-shadow: 0 1rem 2rem rgba(10, 15, 35, 0.12);
-        }
-
-        .core-role-box {
-            min-height: 10rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .post-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .post-card {
-            min-height: 12rem;
-        }
-
-        .feature-panel h5,
-        .feature-panel h6 {
-            color: #ffffff;
-        }
-
-        .feature-panel p,
-        .feature-panel li,
-        .feature-panel label {
-            color: rgba(237, 237, 242, 0.82);
-        }
-
-        .feature-chip {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem 0.9rem;
-            margin: 0 0.5rem 0.5rem 0;
-            border-radius: 999px;
-            background: rgba(61, 69, 170, 0.28);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            font-size: 0.95rem;
-        }
-
-        .appreciation-item {
-            height: 100%;
-            border-radius: 1rem;
-            padding: 1rem 1.1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .appreciation-item strong {
-            display: block;
-            color: #ffffff;
-            font-size: 1.05rem;
-            margin-bottom: 0.35rem;
-        }
-
-        .appreciation-item span {
-            color: rgba(237, 237, 242, 0.72);
-        }
-
-        .form-control,
-        .form-select {
-            background-color: rgba(255, 255, 255, 0.92);
-            border-color: rgba(255, 255, 255, 0.18);
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: var(--brand-orange);
-            box-shadow: 0 0 0 0.2rem rgba(255, 68, 0, 0.18);
-        }
-
-        @media (max-width: 991.98px) {
-            .hero-section {
-                padding-top: 3rem;
-            }
-
-            .hero-visual {
-                min-height: 26rem;
-                margin-top: 2rem;
-            }
-
-            .hero-stats {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 575.98px) {
-            .hero-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-badge {
-                transform: scale(0.9);
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS | Training & Placement Cell</title>
+  <meta name="description" content="Welcome to Nexus, the premium Training and Placement cell driving college career acceleration, bootcamps, resume verification, mock interviews, and recruiter matches.">
+  
+  <!-- FontAwesome Icon Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 mb-3 border-bottom" style="background-color: #FF4400; font-size: 0.95rem;">
-    <div class="col-md-2 mb-2 mb-md-0 d-flex flex-column align-items-start ms-2">
-        <a href="/" class="text-decoration-none">
-            <img src="https://via.placeholder.com/64" alt="Rise and Recruit logo" width="64" height="64" style="border-radius: 8px;">
-        </a>
-        <span style="color: white; font-size: 0.8rem; margin-top: 4px;">Rit Student Club, RIT</span>
+  <!-- ==========================================
+       NAVIGATION BAR
+       ========================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        <div class="logo-icon">N</div>
+        <span>NEXUS</span>
+      </a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#" class="nav-link active">Home</a></li>
+        <li><a href="#stats" class="nav-link">Stats</a></li>
+        <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
+        <li><a href="#matcher" class="nav-link">Skills</a></li>
+        <li><a href="#testimonials" class="nav-link">Alumni</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#contact" class="glow-btn" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Register Now</a></li>
+      </ul>
+      
+      <button class="mobile-nav-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
-
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2" style="color: white;">Home</a></li>
-        <li><a href="#" class="nav-link px-2" style="color: white;">About</a></li>
-        <li><a href="#" class="nav-link px-2" style="color: white;">Committees</a></li>
-        <li><a href="#" class="nav-link px-2" style="color: white;">Contact</a></li>
-        <li><a href="#" class="nav-link px-2" style="color: white;">Recruitment</a></li>
-    </ul>
-
-    <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary border-0 me-2" style="color: white;">Login</button>
-        <button type="button" class="btn btn-primary me-2" style="color: white; background-color: #3D45AA; border-color: #3D45AA;">Sign-up</button>
+  </nav>
+  <!-- ==========================================
+       HERO SECTION
+       ========================================== -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="badge">
+          <div class="badge-dot"></div>
+          <span>Cognizance. Competence. Career.</span>
+        </div>
+        <h1 class="hero-title">Propel Your Career <br>Into the <span class="gradient-text">Future</span></h1>
+        <p class="hero-description">
+          Nexus is the catalyst for your professional growth. We merge industry-grade training bootcamps, continuous mock analysis, and premium recruiter linkages to bridge the gap between academic learning and corporate success.
+        </p>
+        <div class="hero-ctas">
+          <a href="#contact" class="glow-btn">
+            <span>Get Placed</span>
+            <i class="fa-solid fa-arrow-trend-up"></i>
+          </a>
+          <a href="#roadmap" class="outline-btn">
+            <span>Explore Roadmap</span>
+            <i class="fa-solid fa-circle-play"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="hero-image-wrapper">
+        <div class="glow-orb-hero"></div>
+        <div class="hero-frame">
+          <!-- The illustration generated previously -->
+          <img src="assets/hero_illustration.jpg" alt="Nexus Career Acceleration Hologram" class="hero-image">
+        </div>
+      </div>
     </div>
-</header>
-<section class="hero-section">
+  </section>
+  <!-- ==========================================
+       STATS DASHBOARD SECTION
+       ========================================== -->
+  <section class="stats" id="stats">
     <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6">
-                <p class="hero-kicker">Igniting Minds.</p>
-                <p class="hero-kicker accent">Inspiring Leaders.</p>
-                <p class="hero-copy">
-                    More than a club, we are a community that transforms potential into leadership. We believe in learning by doing, leading with purpose, and growing through every experience. From organizing impactful events to embracing new challenges, we build confidence, teamwork, and professionalism. Together, we prepare tomorrow's changemakers to lead with vision, integrity, and excellence.
-                </p>
-                <div class="hero-actions">
-                    <button type="button" class="btn btn-light">Apply Now</button>
-                    <button type="button" class="btn btn-outline-light">Explore Committees</button>
-                </div>
-
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <strong>50+</strong>
-                        <span>Members</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong>30+</strong>
-                        <span>Companies</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong>10+</strong>
-                        <span>Events</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong>4</strong>
-                        <span>Committees</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="hero-visual">
-                    <div class="hero-rings"></div>
-                    <div class="hero-rings ring-1"></div>
-                    <div class="hero-rings ring-2"></div>
-                    <div class="hero-badge badge-1">Leadership</div>
-                    <div class="hero-badge badge-2">Innovation</div>
-                    <div class="hero-badge badge-3">Teamwork</div>
-                    <div class="hero-badge badge-4">Networking</div>
-                    <div class="hero-badge badge-5">Opportunities</div>
-                    <div class="hero-badge badge-6">Growth</div>
-                    <div class="hero-logo-shell">
-                        <img src="https://via.placeholder.com/420x420.png?text=RISE+%26+RECRUIT" alt="Rise and Recruit logo">
-                    </div>
-                </div>
-            </div>
+      <div class="stats-grid">
+        
+        <div class="stat-card glass-panel">
+          <div class="stat-number" data-target="98">0</div><span class="stat-number">%</span>
+          <div class="stat-label">Placement Percentage</div>
         </div>
+        
+        <div class="stat-card glass-panel">
+          <div class="stat-number" data-target="48">0</div><span class="stat-number"> LPA</span>
+          <div class="stat-label">Highest Package Offered</div>
+        </div>
+        
+        <div class="stat-card glass-panel">
+          <div class="stat-number" data-target="150">0</div><span class="stat-number">+</span>
+          <div class="stat-label">Recruiting Partnerships</div>
+        </div>
+        
+        <div class="stat-card glass-panel">
+          <div class="stat-number" data-target="12.4">0</div><span class="stat-number"> LPA</span>
+          <div class="stat-label">Average CTC</div>
+        </div>
+        
+      </div>
     </div>
-</section>
-<main class="container pb-4">
-    <section class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        <div class="col">
-            <div class="card card-hover h-100 border border-2 border-light-subtle shadow-sm rounded-4 overflow-hidden">
-                <div class="card-image-placeholder"></div>
-                <div class="card-body">
-                    <h5 class="card-title">Leadership Workshop</h5>
-                    <p class="card-text text-muted mb-0">Build confidence and communication skills with interactive sessions.</p>
-                </div>
+  </section>
+  <!-- ==========================================
+       ROADMAP SECTION (TIMELINE)
+       ========================================== */ -->
+  <section class="roadmap" id="roadmap">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">Your Journey</span>
+        <h2 class="section-title">The Career Progression Matrix</h2>
+        <p class="section-desc">Follow our structured milestones designed to mold fresh minds into highly competent industry-ready professionals.</p>
+      </div>
+      
+      <div class="roadmap-layout">
+        <!-- Timeline Steps -->
+        <div class="timeline-stepper">
+          
+          <div class="step-node active" data-step="1">
+            <div class="step-marker"></div>
+            <div class="step-info">
+              <span class="step-num">Phase 01</span>
+              <h3 class="step-title">Discovery & Skill Assessment</h3>
             </div>
-        </div>
-
-        <div class="col">
-            <div class="card card-hover h-100 border border-2 border-light-subtle shadow-sm rounded-4 overflow-hidden">
-                <div class="card-image-placeholder"></div>
-                <div class="card-body">
-                    <h5 class="card-title">Committee Meetups</h5>
-                    <p class="card-text text-muted mb-0">Join committees and collaborate on events, outreach, and planning.</p>
-                </div>
+          </div>
+          
+          <div class="step-node" data-step="2">
+            <div class="step-marker"></div>
+            <div class="step-info">
+              <span class="step-num">Phase 02</span>
+              <h3 class="step-title">Intensive Bootcamp Training</h3>
             </div>
-        </div>
-
-        <div class="col">
-            <div class="card card-hover h-100 border border-2 border-light-subtle shadow-sm rounded-4 overflow-hidden">
-                <div class="card-image-placeholder"></div>
-                <div class="card-body">
-                    <h5 class="card-title">Recruitment Drive</h5>
-                    <p class="card-text text-muted mb-0">Connect with peers and discover open student leadership opportunities.</p>
-                </div>
+          </div>
+          
+          <div class="step-node" data-step="3">
+            <div class="step-marker"></div>
+            <div class="step-info">
+              <span class="step-num">Phase 03</span>
+              <h3 class="step-title">Resume Crafting & Branding</h3>
             </div>
+          </div>
+          
+          <div class="step-node" data-step="4">
+            <div class="step-marker"></div>
+            <div class="step-info">
+              <span class="step-num">Phase 04</span>
+              <h3 class="step-title">Mock Drills & Peer Reviews</h3>
+            </div>
+          </div>
+          
+          <div class="step-node" data-step="5">
+            <div class="step-marker"></div>
+            <div class="step-info">
+              <span class="step-num">Phase 05</span>
+              <h3 class="step-title">Placement Drives & Offer Nexus</h3>
+            </div>
+          </div>
+          
         </div>
-    </section>
-
-    <div class="section-divider">
-        <div class="line"></div>
-        <div class="dot"></div>
-        <div class="line reverse"></div>
+        
+        <!-- Display Detail Panel -->
+        <div class="roadmap-details-card glass-panel" id="roadmap-details">
+          <div class="details-header">
+            <div class="details-icon">
+              <i class="fa-solid fa-magnifying-glass-chart"></i>
+            </div>
+            <h3 class="details-title" id="details-title">Discovery & Skill Assessment</h3>
+          </div>
+          <p class="details-text" id="details-text">
+            Every candidate begins by undergoing automated benchmarking. We evaluate your core coding aptitude, communication parameters, and logic metrics to outline your customized training curve.
+          </p>
+          <div class="details-metrics">
+            <div class="metric-item">
+              <span class="metric-label">Duration</span>
+              <span class="metric-value" id="details-duration">Week 1 - 2</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Key Output</span>
+              <span class="metric-value" id="details-output">Individual Competency Chart</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    
-    <section class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        <div class="col">
-            <div class="card card-hover h-100 border border-2 border-light-subtle shadow-sm rounded-4 overflow-hidden">
-                <div class="card-image-placeholder"></div>
-                <div class="card-body">
-                    <h5 class="card-title">Team Projects</h5>
-                    <p class="card-text text-muted mb-0">Work in teams to plan and execute impactful campus initiatives.</p>
-                </div>
-            </div>
+  </section>
+  <!-- ==========================================
+       SKILL MATCHER SECTION
+       ========================================== -->
+  <section class="skill-matcher" id="matcher">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">Adaptive Guidance</span>
+        <h2 class="section-title">Explore Placement Sectors</h2>
+        <p class="section-desc">Select your industry preference to see recommended skills, certifications, and our placement readiness scale.</p>
+      </div>
+      
+      <div class="matcher-layout">
+        <!-- Sector List Left -->
+        <div class="sector-list">
+          <button class="sector-btn active" data-sector="software">
+            <span>Software Development</span>
+            <i class="fa-solid fa-code"></i>
+          </button>
+          <button class="sector-btn" data-sector="data">
+            <span>Data Science & AI</span>
+            <i class="fa-solid fa-brain"></i>
+          </button>
+          <button class="sector-btn" data-sector="core">
+            <span>Core Engineering</span>
+            <i class="fa-solid fa-gears"></i>
+          </button>
+          <button class="sector-btn" data-sector="finance">
+            <span>Finance & Management</span>
+            <i class="fa-solid fa-chart-line"></i>
+          </button>
+          <button class="sector-btn" data-sector="design">
+            <span>UX Design & Product</span>
+            <i class="fa-solid fa-bezier-curve"></i>
+          </button>
         </div>
-
-        <div class="col">
-            <div class="card card-hover h-100 border border-2 border-light-subtle shadow-sm rounded-4 overflow-hidden">
-                <div class="card-image-placeholder"></div>
-                <div class="card-body">
-                    <h5 class="card-title">Networking Sessions</h5>
-                    <p class="card-text text-muted mb-0">Meet mentors and peers through focused networking opportunities.</p>
-                </div>
+        
+        <!-- Results Card Right -->
+        <div class="matcher-content-card glass-panel">
+          <h3 class="recommendations-title">
+            <i class="fa-solid fa-rocket"></i>
+            <span id="recom-sector-title">Software Development</span>
+          </h3>
+          
+          <div class="recom-grid">
+            <div class="skills-block">
+              <p class="form-label" style="margin-bottom: 1rem;">Primary Readiness Skills</p>
+              <div class="skills-list" id="recom-skills-list">
+                <!-- Javascript will inject list here -->
+              </div>
             </div>
+            
+            <div class="employability-panel">
+              <div class="circular-progress" id="recom-progress">
+                <span class="progress-val" id="recom-percentage">88%</span>
+              </div>
+              <span class="employ-label">Employability Status</span>
+              <span class="employ-title" id="recom-status">High Demand</span>
+            </div>
+          </div>
         </div>
-
-        <div class="col">
-            <div class="card card-hover h-100 border border-2 border-light-subtle shadow-sm rounded-4 overflow-hidden">
-                <div class="card-image-placeholder"></div>
-                <div class="card-body">
-                    <h5 class="card-title">Skill Building</h5>
-                    <p class="card-text text-muted mb-0">Sharpen leadership, speaking, and planning skills through practice.</p>
-                </div>
+      </div>
+    </div>
+  </section>
+  <!-- ==========================================
+       RECRUITER MARQUEE (INFINITE SCROLL)
+       ========================================== -->
+  <section class="recruiters">
+    <div class="brand-wrapper">
+      <div class="brand-scroll-track">
+        <!-- Set of logos (duplicated to loop smoothly) -->
+        <div class="brand-logo"><i class="fa-brands fa-google"></i><span>Google</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-microsoft"></i><span>Microsoft</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-amazon"></i><span>Amazon</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-apple"></i><span>Apple</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-meta"></i><span>Meta</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-salesforce"></i><span>Salesforce</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-nvidia"></i><span>NVIDIA</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-github"></i><span>GitHub</span></div>
+        <!-- Duplicated loop set -->
+        <div class="brand-logo"><i class="fa-brands fa-google"></i><span>Google</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-microsoft"></i><span>Microsoft</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-amazon"></i><span>Amazon</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-apple"></i><span>Apple</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-meta"></i><span>Meta</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-salesforce"></i><span>Salesforce</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-nvidia"></i><span>NVIDIA</span></div>
+        <div class="brand-logo"><i class="fa-brands fa-github"></i><span>GitHub</span></div>
+      </div>
+    </div>
+  </section>
+  <!-- ==========================================
+       ALUMNI TESTIMONIALS
+       ========================================== -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">Testimonials</span>
+        <h2 class="section-title">Words from Nexus Achievers</h2>
+        <p class="section-desc">Read how Nexus shaped the trajectories of our alumni, guiding them to their dream organizations.</p>
+      </div>
+      
+      <div class="testimonial-carousel-container">
+        <div class="testimonials-track" id="testimonials-track">
+          
+          <!-- Testimonial 01 -->
+          <div class="testimonial-card glass-panel">
+            <p class="test-desc">
+              "The technical bootcamps at Nexus were extremely structured. The mock interviews simulated the pressure of actual Google rounds, which helped me land my Software Engineer role with confidence."
+            </p>
+            <div class="student-info">
+              <div class="student-img-wrapper">
+                <svg width="100%" height="100%" viewBox="0 0 100 100" class="student-img">
+                  <defs>
+                    <linearGradient id="avatarG1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#8b5cf6" />
+                      <stop offset="100%" stop-color="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="50" cy="50" r="50" fill="url(#avatarG1)" />
+                  <path d="M50 30a15 15 0 1 0 0 30 15 15 0 0 0 0-30zm0 35c-20 0-32 10-32 20v5h64v-5c0-10-12-20-32-20z" fill="#fff" opacity="0.9"/>
+                </svg>
+              </div>
+              <div class="student-details">
+                <h4>Aarav Sharma</h4>
+                <p>B.Tech CS, Class of 2025</p>
+              </div>
             </div>
+            <div class="placement-badge">Placed at Google (32 LPA)</div>
+          </div>
+          
+          <!-- Testimonial 02 -->
+          <div class="testimonial-card glass-panel">
+            <p class="test-desc">
+              "The resume validation checks and portfolio reviews completely transformed my placement approach. The direct linkages with top recruiter agencies gave me multiple offers simultaneously."
+            </p>
+            <div class="student-info">
+              <div class="student-img-wrapper">
+                <svg width="100%" height="100%" viewBox="0 0 100 100" class="student-img">
+                  <defs>
+                    <linearGradient id="avatarG2" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#10b981" />
+                      <stop offset="100%" stop-color="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="50" cy="50" r="50" fill="url(#avatarG2)" />
+                  <path d="M50 30a15 15 0 1 0 0 30 15 15 0 0 0 0-30zm0 35c-20 0-32 10-32 20v5h64v-5c0-10-12-20-32-20z" fill="#fff" opacity="0.9"/>
+                </svg>
+              </div>
+              <div class="student-details">
+                <h4>Sneha Iyer</h4>
+                <p>B.Tech IT, Class of 2025</p>
+              </div>
+            </div>
+            <div class="placement-badge">Placed at Microsoft (28 LPA)</div>
+          </div>
+          
+          <!-- Testimonial 03 -->
+          <div class="testimonial-card glass-panel">
+            <p class="test-desc">
+              "Even coming from a core electronics branch, the placement cell mapped my digital design skillset correctly, recommending software resources that perfectly prepared me for Apple."
+            </p>
+            <div class="student-info">
+              <div class="student-img-wrapper">
+                <svg width="100%" height="100%" viewBox="0 0 100 100" class="student-img">
+                  <defs>
+                    <linearGradient id="avatarG3" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#ec4899" />
+                      <stop offset="100%" stop-color="#8b5cf6" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="50" cy="50" r="50" fill="url(#avatarG3)" />
+                  <path d="M50 30a15 15 0 1 0 0 30 15 15 0 0 0 0-30zm0 35c-20 0-32 10-32 20v5h64v-5c0-10-12-20-32-20z" fill="#fff" opacity="0.9"/>
+                </svg>
+              </div>
+              <div class="student-details">
+                <h4>Kabir Malhotra</h4>
+                <p>B.Tech ECE, Class of 2025</p>
+              </div>
+            </div>
+            <div class="placement-badge">Placed at Apple (45 LPA)</div>
+          </div>
+          
         </div>
-    </section>
-
-    <section class="content-section">
-        <div class="section-title">Why Join Us</div>
-        <p class="section-subtitle">Join a community that helps you grow, lead, and connect through meaningful experiences and practical opportunities.</p>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="feature-panel">
-                    <h5>Build confidence</h5>
-                    <p class="mb-0">Gain real opportunities to speak, organize, and lead in a supportive environment.</p>
-                </div>
+      </div>
+      
+      <!-- Carousel Indicators -->
+      <div class="carousel-nav">
+        <span class="nav-dot active" data-slide="0"></span>
+        <span class="nav-dot" data-slide="1"></span>
+        <span class="nav-dot" data-slide="2"></span>
+      </div>
+    </div>
+  </section>
+  <!-- ==========================================
+       CONTACT & REGISTRATION PORTAL
+       ========================================== -->
+  <section class="contact" id="contact">
+    <div class="container contact-grid">
+      <!-- Contact Form -->
+      <div class="contact-card glass-panel">
+        <h3>Begin Your Journey</h3>
+        <p>Register as a student looking to scale career heights or as a recruiter seeking elite talent.</p>
+        
+        <form id="contact-form" onsubmit="event.preventDefault(); alert('Registration submitted successfully! Welcome to Nexus.');">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" id="name" class="form-control" placeholder="Aarav Sharma" required>
             </div>
-            <div class="col-md-4">
-                <div class="feature-panel">
-                    <h5>Develop skills</h5>
-                    <p class="mb-0">Strengthen communication, teamwork, planning, and professional readiness.</p>
-                </div>
+            <div class="form-group">
+              <label for="email" class="form-label">College Email</label>
+              <input type="email" id="email" class="form-control" placeholder="aarav@college.edu" required>
             </div>
-            <div class="col-md-4">
-                <div class="feature-panel">
-                    <h5>Expand your network</h5>
-                    <p class="mb-0">Connect with peers, mentors, and companies through events and collaborations.</p>
-                </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="role" class="form-label">Register As</label>
+              <select id="role" class="form-control" style="background-color: var(--bg-dark);" required>
+                <option value="student">Student (Looking for Placements)</option>
+                <option value="recruiter">Recruiter (Looking to Hire)</option>
+                <option value="alumni">Alumni (Mentorship / Guides)</option>
+              </select>
             </div>
+            <div class="form-group">
+              <label for="branch" class="form-label">Branch / Department</label>
+              <input type="text" id="branch" class="form-control" placeholder="Computer Science & Eng." required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="message" class="form-label">Interests & Core Skills (Brief Description)</label>
+            <textarea id="message" class="form-control" placeholder="Mention programming languages, frameworks, or past experiences..." required></textarea>
+          </div>
+          
+          <button type="submit" class="glow-btn" style="width: 100%; justify-content: center; margin-top: 1rem;">
+            <span>Submit Registration</span>
+            <i class="fa-solid fa-circle-check"></i>
+          </button>
+        </form>
+      </div>
+      
+      <!-- Contact Info Details -->
+      <div class="contact-info-panel">
+        <div class="info-cards">
+          
+          <div class="info-item glass-panel">
+            <div class="info-item-icon">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <div class="info-item-details">
+              <h4>Placement Cell Office</h4>
+              <p>Block-A, Tech Campus, Academic Arcade, NY 10001</p>
+            </div>
+          </div>
+          
+          <div class="info-item glass-panel">
+            <div class="info-item-icon">
+              <i class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            <div class="info-item-details">
+              <h4>Official Mail Desk</h4>
+              <p>placements@nexus.college.edu</p>
+            </div>
+          </div>
+          
+          <div class="info-item glass-panel">
+            <div class="info-item-icon">
+              <i class="fa-solid fa-phone-volume"></i>
+            </div>
+            <div class="info-item-details">
+              <h4>Direct Inquiries</h4>
+              <p>+1 (555) 902-1244 (Mon - Fri)</p>
+            </div>
+          </div>
+          
         </div>
-    </section>
-
-    <section class="content-section">
-        <div class="section-title">What Makes Us Different</div>
-        <p class="section-subtitle">We focus on action, not just participation. Every activity is designed to create visible growth and impact.</p>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="feature-panel">
-                    <h6>Hands-on learning</h6>
-                    <p class="mb-0">You learn by doing real work with real outcomes.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="feature-panel">
-                    <h6>Leadership focus</h6>
-                    <p class="mb-0">We create space for emerging leaders to take ownership.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="feature-panel">
-                    <h6>Industry exposure</h6>
-                    <p class="mb-0">Workshops and interactions keep you connected to industry trends.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="feature-panel">
-                    <h6>Inclusive culture</h6>
-                    <p class="mb-0">Everyone gets a chance to contribute and grow at their pace.</p>
-                </div>
-            </div>
+        
+        <!-- Social Networks Linkages -->
+        <div class="social-panel glass-panel" style="margin-top: 2rem;">
+          <h4>Connect with Nexus Networking</h4>
+          <div class="social-icons">
+            <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-icon" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
         </div>
-    </section>
-
-    <section class="content-section">
-        <div class="section-title">Industry Appreciation</div>
-        <p class="section-subtitle">A quick look at the kinds of support and partnerships we value as part of our community ecosystem.</p>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="appreciation-item">
-                    <strong>Mentorship support</strong>
-                    <span>Guidance from professionals and alumni helps students make better career choices.</span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="appreciation-item">
-                    <strong>Recruitment opportunities</strong>
-                    <span>Industry connections create a stronger path to internships and placements.</span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="appreciation-item">
-                    <strong>Knowledge sharing</strong>
-                    <span>Workshops and talks keep students aligned with current tools and practices.</span>
-                </div>
-            </div>
+      </div>
+    </div>
+  </section>
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-icon">N</div>
+            <span>NEXUS</span>
+          </a>
+          <p>Accelerating dreams into industry-level placements. Elevate your technical and core potential under structured guidelines.</p>
         </div>
-    </section>
-
-    <section class="content-section">
-        <div class="section-title">Core Committee</div>
-        <p class="section-subtitle">Meet the people guiding the club and helping shape the direction of our activities.</p>
-        <div class="post-grid">
-            <div class="feature-panel core-role-box post-card">
-                <div class="feature-chip">Head</div>
-                <div>
-                    <p class="mb-0">Leads planning, coordinates with teams, and ensures every initiative stays purposeful.</p>
-                </div>
-            </div>
-
-            <div class="feature-panel core-role-box post-card">
-                <div class="feature-chip">Co-Head</div>
-                <div>
-                    <p class="mb-0">Supports execution, team collaboration, and smooth delivery across all events.</p>
-                </div>
-            </div>
-
-            <div class="feature-panel core-role-box post-card">
-                <div class="feature-chip">Treasurer</div>
-                <div>
-                    <p class="mb-0">Manages budgeting, spending, and financial planning for club activities.</p>
-                </div>
-            </div>
-
-            <div class="feature-panel core-role-box post-card">
-                <div class="feature-chip">Chief Placement Coordinator</div>
-                <div>
-                    <p class="mb-0">Coordinates placement support, opportunities, and company interactions for members.</p>
-                </div>
-            </div>
-
-            <div class="feature-panel core-role-box post-card">
-                <div class="feature-chip">Chief Media &amp; Publicity</div>
-                <div>
-                    <p class="mb-0">Handles promotions, content, and communication across social and campus channels.</p>
-                </div>
-            </div>
-
-            <div class="feature-panel core-role-box post-card" style="margin-top: 1.25rem;">
-                <div class="feature-chip">Chief Training &amp; Skill Development</div>
-                <div>
-                    <p class="mb-0">Plans workshops and learning sessions to build practical student skills.</p>
-                </div>
-            </div>
-
-            <div class="feature-panel core-role-box post-card" style="margin-top: 1.25rem;">
-                <div class="feature-chip">Chief Feedback &amp; Analysis</div>
-                <div>
-                    <p class="mb-0">Collects feedback, reviews outcomes, and helps improve future events and initiatives.</p>
-                </div>
-            </div>
+        
+        <div class="footer-links-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Home</a></li>
+            <li><a href="#stats" class="footer-link">Placement Stats</a></li>
+            <li><a href="#roadmap" class="footer-link">Preparation Roadmap</a></li>
+            <li><a href="#matcher" class="footer-link">Skill Matcher Widget</a></li>
+          </ul>
         </div>
-    </section>
-
-    <section class="content-section">
-        <div class="section-title">Committees</div>
-        <p class="section-subtitle">Explore the committees where members can contribute based on their interests and strengths.</p>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="feature-panel">
-                    <h5>Placement Co-Ordination</h5>
-                    <p class="mb-0">Plans workshops, meetups, and on-campus experiences.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-panel">
-                    <h5>Media & Publicity</h5>
-                    <p class="mb-0">Handles visuals, announcements, and social updates.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-panel">
-                    <h5>Skill Development</h5>
-                    <p class="mb-0">Builds connections with students, faculty, and industry partners.</p>
-                </div>
-            </div>
+        
+        <div class="footer-links-col">
+          <h4>External</h4>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Verification Portal</a></li>
+            <li><a href="#" class="footer-link">Student Login</a></li>
+            <li><a href="#" class="footer-link">Corporate Brochure</a></li>
+            <li><a href="#" class="footer-link">FAQ & Support</a></li>
+          </ul>
         </div>
-         </div>
-            <div class="col-md-4 container pb-4 grid gap-4 " style="margin-top: 1.25rem;">  
-                <div class="feature-panel">
-                    <h5>Skill Development</h5>
-                    <p class="mb-0">Builds connections with students, faculty, and industry partners.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="d-flex justify-content-center">
-            <div style="max-width:820px; width:100%;">
-                <div class="feature-panel" style="background:#fff; color:#111; padding:28px 28px 18px; border-radius:12px;">
-                    <div style="text-align:center; margin-bottom:8px;">
-                        <h3 style="margin:0; color:#17223b; font-weight:800;">Recruitment Form</h3>
-                        <p class="section-subtitle" style="color:#5b6578; margin-top:8px;">Fill in your details to apply for the Placement Club.</p>
-                    </div>
-
-                    <form id="recruitmentForm" action="#" method="post" novalidate>
-                        <div class="row g-3" style="margin-top:8px;">
-                            <div class="col-12">
-                                <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" required aria-required="true">
-                            </div>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" id="prn" name="prn" placeholder="PRN / Roll Number" required aria-required="true">
-                            </div>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" id="collegeEmail" name="collegeEmail" placeholder="College Email" required aria-required="true">
-                            </div>
-
-                            <div class="col-md-6">
-                                <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required aria-required="true">
-                            </div>
-
-                            <div class="col-md-3">
-                                <select class="form-select" id="chooseCommittee" name="chooseCommittee" required>
-                                    <option value="" disabled selected>Choose Committee</option>
-                                    <option value="placement">Placement Co-Ordination</option>
-                                    <option value="media">Media &amp; Publicity</option>
-                                    <option value="skill">Skill Development</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-3">
-                                <select class="form-select" id="chooseYear" name="chooseYear" required>
-                                    <option value="" disabled selected>Choose Year</option>
-                                    <option value="1">1st Year</option>
-                                    <option value="2">2nd Year</option>
-                                    <option value="3">3rd Year</option>
-                                    <option value="4">4th Year</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-3">
-                                <select class="form-select" id="chooseDept" name="chooseDept" required>
-                                    <option value="" disabled selected>Choose Department</option>
-                                    <option>Computer Engineering</option>
-                                    <option>Information Technology</option>
-                                    <option>Electronics</option>
-                                    <option>Mechanical</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-3">
-                                <select class="form-select" id="chooseAcco" name="chooseAcco" required>
-                                    <option value="" disabled selected>Choose Accommodation</option>
-                                    <option>Day Scholar</option>
-                                    <option>Hosteller</option>
-                                </select>
-                            </div>
-
-                            <div class="col-12" style="margin-top:6px; border-top:1px solid rgba(0,0,0,0.06); padding-top:12px;">
-                                <h6 style="margin:0 0 10px 0; color:#17223b; font-weight:700;">Committee Preferences</h6>
-                                <p style="margin:0 0 12px 0; color:#6b7280; font-size:0.95rem;">Select your preferences from 1 (highest) to 4 (lowest).</p>
-
-                                <div class="row g-3">
-                                    <div class="col-md-6 col-lg-3">
-                                        <select class="form-select" id="pref1" name="pref1" required>
-                                            <option value="" disabled selected>1st Preference</option>
-                                            <option>Placement Co-Ordination</option>
-                                            <option>Media &amp; Publicity</option>
-                                            <option>Skill Development</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-6 col-lg-3">
-                                        <select class="form-select" id="pref2" name="pref2" required>
-                                            <option value="" disabled selected>2nd Preference</option>
-                                            <option>Placement Co-Ordination</option>
-                                            <option>Media &amp; Publicity</option>
-                                            <option>Skill Development</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-6 col-lg-3">
-                                        <select class="form-select" id="pref3" name="pref3" required>
-                                            <option value="" disabled selected>3rd Preference</option>
-                                            <option>Placement Co-Ordination</option>
-                                            <option>Media &amp; Publicity</option>
-                                            <option>Skill Development</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-6 col-lg-3">
-                                        <select class="form-select" id="pref4" name="pref4" required>
-                                            <option value="" disabled selected>4th Preference</option>
-                                            <option>Placement Co-Ordination</option>
-                                            <option>Media &amp; Publicity</option>
-                                            <option>Skill Development</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3">
-                                    <textarea class="form-control" id="whyJoin" name="whyJoin" rows="4" placeholder="Why do you want to join the Placement Club?"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12 mt-3">
-                                <button type="submit" class="btn" style="background:var(--brand-orange); color:#111; width:100%; padding:12px 18px; border-radius:8px; font-weight:700;">Submit Application</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer class="container pt-2 pb-4">
-    <ul class="nav justify-content-center border-top pt-3 mb-3">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-    </ul>
-    <p class="text-center text-body-secondary mb-0" style="font-size: 0.875rem; color: white !important;">&copy; 2026 Rise &amp; Recruit Club, RIT. All Rights Reserved.</p>
-</footer>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nexus Training & Placement Cell. All rights reserved.</p>
+        <p>Engineered for high performance and premium student experiences.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- Scripts -->
+  <script src="main.js"></script>
 </body>
 </html>
